@@ -10,7 +10,8 @@ namespace ChattingClient
 {
     public static class ThreadHelperClass
     {
-        delegate void SetTextCallback(Form f, Control ctrl, string text);
+        private delegate void SetTextCallback(Form f, Control ctrl, string text);
+
         /// <summary>
         /// Set text property of various controls
         /// </summary>
@@ -19,9 +20,9 @@ namespace ChattingClient
         /// <param name="text"></param>
         public static void SetText(Form form, Control ctrl, string text)
         {
-            // InvokeRequired required compares the thread ID of the 
-            // calling thread to the thread ID of the creating thread. 
-            // If these threads are different, it returns true. 
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
             if (ctrl.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(SetText);
@@ -33,6 +34,7 @@ namespace ChattingClient
             }
         }
     }
+
     public partial class Form1 : Form
     {
         public bool IsConnect { get; set; } = false;
@@ -48,7 +50,7 @@ namespace ChattingClient
             {
                 BootstrapServers = BootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest,
-                ClientId = CurrentUserId.ToString(), 
+                ClientId = CurrentUserId.ToString(),
                 GroupId = CurrentUserId.ToString()
             };
             using (IConsumer<Ignore, string> consumer = new ConsumerBuilder<Ignore, string>(config).Build())
